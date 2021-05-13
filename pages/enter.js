@@ -1,8 +1,9 @@
+import { useContext } from 'react'
+import { UserContext } from '../lib/context'
 import { auth, googleAuthProvider } from '../lib/firebase'
 
 export default function EnterPage () {
-  const user = null
-  const userName = null
+  const [user, userName] = useContext(UserContext)
 
   // 1. user signed out <SignInButton />
   // 2. user signed in, but missing username <UsernameForm />

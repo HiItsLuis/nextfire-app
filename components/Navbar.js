@@ -1,8 +1,9 @@
 import Link from 'next/link'
+import { useContext } from 'react'
+import { UserContext } from '../lib/context'
 
 export default function Navbar () {
-  const user = null
-  const userName = null
+  const [user, userName] = useContext(UserContext)
 
   return (
     <nav className='navbar'>
@@ -29,7 +30,7 @@ export default function Navbar () {
           </>
         )}
 
-        {/* User is not signed-in OR created username */}
+        {/* User is not signed-in OR created userName */}
         {!userName && (
           <li>
             <Link href='enter'>
