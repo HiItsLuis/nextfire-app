@@ -1,5 +1,7 @@
+import PostContent from '../../components/PostContent'
 import { firestore, getUserWithUserName, postToJSON } from '../../lib/firebase'
-import styles from '../../styles/Post.module.css';
+import styles from '../../styles/Post.module.css'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
 
 export async function getStaticProps ({ params }) {
   const { userName, slug } = params
@@ -21,31 +23,39 @@ export async function getStaticProps ({ params }) {
   }
 }
 
-export async function getStaticPaths(){
-
+export async function getStaticPaths () {
   // Improve by using admin SDK to select empty docs -> more complex but should look into it
   const snapshot = await firestore.collectionGroup('posts').get()
 
   const paths = snapshot.docs.map((doc) => {
-    const {userName, slug} = doc.data()
+    const { userName, slug } = doc.data()
     return {
-      params: {userName, slug}
+      params: { userName, slug }
     }
   })
 
-  console.log(paths)
-
   return {
-    paths, 
+    paths,
     fallback: 'blocking'
   }
-
 }
 
 export default function PostPage (props) {
+  const postRef = firestore.doc(props.path)
+  const [realTimePost] = useDocumentData(postRef)
+
+  const post = realTimePost || props.post
+
   return (
     <main className={styles.container}>
-      <h1>Post</h1>
+      <section>
+        <PostContent post={post} />
+      </section>
+      <aside className='card'>
+        <p>
+          <strong>{post.heartCount || 0} ❤️</strong>
+        </p>
+      </aside>
     </main>
   )
 }
