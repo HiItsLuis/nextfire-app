@@ -1,18 +1,17 @@
-import PostFeed from "../../components/PostFeed";
-import UserProfile from "../../components/UserProfile";
-import { getUserWithUserName, postToJSON } from "../../lib/firebase";
+import PostFeed from '../../components/PostFeed'
+import UserProfile from '../../components/UserProfile'
+import { getUserWithUserName, postToJSON } from '../../lib/firebase'
 
-export async function getServerSideProps({query}) {
-  const {userName} = query
+export async function getServerSideProps ({ query }) {
+  const { userName } = query
 
   const userDoc = await getUserWithUserName(userName)
 
-  
   // JSON serializable data
   let user = null
   let posts = null
 
-  if(userDoc){
+  if (userDoc) {
     user = userDoc.data()
     const postQuery = userDoc.ref
       .collection('posts')
@@ -23,15 +22,15 @@ export async function getServerSideProps({query}) {
   }
 
   return {
-    props: {user, posts}
+    props: { user, posts }
   }
 }
 
-export default function UserProfilePage({user, posts}) {
+export default function UserProfilePage ({ user, posts }) {
   return (
     <main>
-      <UserProfile user={user}/>
-      <PostFeed posts={posts}/>
+      <UserProfile user={user} />
+      <PostFeed posts={posts} />
     </main>
   )
 }

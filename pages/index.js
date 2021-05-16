@@ -62,8 +62,8 @@ export default function Home (props) {
 
       <div>
         <button onClick={() => toast.success('Hello toast!')}>
-            Toast me
-          </button>
+          Toast me
+        </button>
       </div>
 
     </main>
