@@ -1,3 +1,4 @@
+import styles from '../../styles/Admin.module.css'
 import AuthCheck from '../../components/AuthCheck'
 import { auth, firestore, serverTimestamp } from '../../lib/firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
@@ -72,7 +73,7 @@ function CreateNewPost () {
   }
 
   return (
-    <form onSubmit={createPost}>
+    <form onSubmit={createPost} className={styles.input}>
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
